@@ -1,140 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myanmar Earn</title>
-    <style>
-        body { 
-            margin: 0; 
-            font-family: Arial, sans-serif; 
-            background: #0b1220; 
-            color: white; 
-            text-align: center; 
-        }
-        header { 
-            background: #1d4ed8; 
-            padding: 20px; 
-            font-size: 28px; 
-            font-weight: bold; 
-        }
-        .card { 
-            background: #1e293b; 
-            margin: 20px; 
-            padding: 20px; 
-            border-radius: 15px; 
-        }
-        input { 
-            padding: 12px; 
-            margin: 8px 0; 
-            width: 90%; 
-            border-radius: 5px; 
-            border: 1px solid #334155; 
-            background: #0f172a;
-            color: white;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button { 
-            background: #22c55e; 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            margin: 10px 5px; 
-            font-size: 16px;
-            font-weight: bold;
-        }
-        #registerBtn {
-            background: #3b82f6;
-        }
-        /* စာသားကြီးကြီးပေါ်မည့်နေရာအား စတိုင်လ်ပြင်ထားသည် */
-        #statusMessage { 
-            color: #facc15; 
-            margin-top: 25px; 
-            font-size: 32px; 
-            font-weight: bold; 
-            text-align: center; 
-            width: 100%;
-            word-wrap: break-word;
-        }
-    </style>
-</head>
-<body>
-
-<header>Myanmar Earn</header>
-
-<div class="card">
-    <input type="email" id="email" placeholder="Email ရိုက်ပါ">
-    <input type="password" id="password" placeholder="Password ရိုက်ပါ">
-    <br>
-    <button id="loginBtn">Login</button>
-    <button id="registerBtn">Register</button>
-    
-    <!-- စာသားကြီးကြီး ပေါ်လာမည့်နေရာ -->
-    <div id="statusMessage"></div>
-</div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-    // Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyAmcEZOyFTm9g47lwaXoAln-XYmY0tQPHE",
         authDomain: "myanmar-b0fce.firebaseapp.com",
         projectId: "myanmar-b0fce",
         storageBucket: "myanmar-b0fce.firebasestorage.app",
         messagingSenderId: "770654697940",
-        appId: "1:770654697940:web:fecfb24d410868c4fc7e41",
-        measurementId: "G-6VBJ03Y6YB"
+        appId: "1:770654697940:web:fecfb24d410868c4fc7e41"
     };
 
-    // Firebase စတင်ချိတ်ဆက်ခြင်း
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const statusDiv = document.getElementById("statusMessage");
-
-    // Register လုပ်ရန် ခလုတ်နှိပ်ခြင်း
-    document.getElementById("registerBtn").addEventListener("click", () => {
+    window.login = () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        
-        statusDiv.style.color = "#facc15"; 
-        statusDiv.innerText = "လုပ်ဆောင်နေသည်...";
-        
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                statusDiv.style.color = "#22c55e"; // အောင်မြင်ရင် အစိမ်းရောင်ပြောင်းမယ်
-                statusDiv.innerText = "မှတ်ပုံတင်ခြင်း အောင်မြင်ပါသည်။";
-            })
-            .catch((error) => {
-                statusDiv.style.color = "#ef4444"; // Error တက်ရင် အနီရောင်ပြောင်းမယ်
-                statusDiv.innerText = "Error: " + error.message;
-            });
-    });
-
-    // Login လုပ်ရန် ခလုတ်နှိပ်ခြင်း
-    document.getElementById("loginBtn").addEventListener("click", () => {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        
-        statusDiv.style.color = "#facc15"; 
-        statusDiv.innerText = "လုပ်ဆောင်နေသည်...";
-        
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                statusDiv.style.color = "#22c55e"; // အောင်မြင်ရင် အစိမ်းရောင်ပြောင်းမယ်
-                statusDiv.innerText = "Login ဝင်ခြင်း အောင်မြင်ပါသည်။";
-            })
-            .catch((error) => {
-                statusDiv.style.color = "#ef4444"; // Error တက်ရင် အနီရောင်ပြောင်းမယ်
-                statusDiv.innerText = "Error: " + error.message;
-            });
-    });
+            .then(() => alert("အောင်မြင်သည်"))
+            .catch((e) => alert(e.message));
+    };
 </script>
-
-</body>
-</html>
