@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="my">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #1a202c; color: white; text-align: center; font-family: sans-serif; padding: 20px; }
+        input { display: block; width: 90%; margin: 10px auto; padding: 10px; border-radius: 5px; color: black; }
+        button { width: 90%; padding: 10px; margin: 5px; border-radius: 5px; cursor: pointer; border: none; font-weight: bold; }
+        .login-btn { background: #28a745; color: white; }
+        .google-btn { background: #dd4b39; color: white; }
+    </style>
+</head>
 <body>
-    <h1>Login စမ်းသပ်ရန်</h1>
+    <h1>Myanmar Earn</h1>
     <input type="email" id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Password">
-    <button onclick="loginUser()">Login ဝင်ရန်</button>
+    <button class="login-btn" onclick="loginUser()">Email ဖြင့် Login ဝင်ရန်</button>
+    <button class="google-btn" onclick="loginGoogle()">Google (Gmail) ဖြင့် Login ဝင်ရန်</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAncEZ0yFm9g47lwaXoAIn-XYmY0tQPHE",
@@ -21,12 +32,21 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
+        // Email/Password Login
         window.loginUser = () => {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => alert("အောင်မြင်သည်!"))
+                .then(() => alert("Login အောင်မြင်သည်!"))
+                .catch((e) => alert("Error: " + e.message));
+        };
+
+        // Google Login
+        window.loginGoogle = () => {
+            signInWithPopup(auth, provider)
+                .then(() => alert("Google Login အောင်မြင်သည်!"))
                 .catch((e) => alert("Error: " + e.message));
         };
     </script>
