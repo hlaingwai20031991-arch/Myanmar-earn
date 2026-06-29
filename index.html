@@ -1,59 +1,49 @@
 <!DOCTYPE html>
-<html lang="my">
+<html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { background: #1a202c; color: white; text-align: center; font-family: sans-serif; padding: 20px; }
-        input { display: block; width: 90%; margin: 10px auto; padding: 10px; border-radius: 5px; color: black; }
-        button { width: 90%; padding: 10px; margin: 5px; border-radius: 5px; cursor: pointer; border: none; font-weight: bold; }
-        .login-btn { background: #28a745; color: white; }
-        .google-btn { background: #dd4b39; color: white; }
+        input { display: block; width: 90%; margin: 10px auto; padding: 12px; border-radius: 5px; border: none; }
+        button { width: 90%; padding: 12px; margin: 5px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; }
+        .green { background: #28a745; color: white; }
+        .red { background: #dd4b39; color: white; }
     </style>
 </head>
 <body>
     <h1>Myanmar Earn</h1>
-    <input type="email" id="email" placeholder="Email">
+    <input id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Password">
-    <button class="login-btn" onclick="loginUser()">Email ဖြင့် Login ဝင်ရန်</button>
-    <button class="google-btn" onclick="loginGoogle()">Google (Gmail) ဖြင့် Login ဝင်ရန်</button>
+    
+    <button class="green" onclick="login()">Email ဖြင့် Login ဝင်ရန်</button>
+    <button class="red" onclick="googleLogin()">Google (Gmail) ဖြင့် Login ဝင်ရန်</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-        const firebaseConfig = {
+        const app = initializeApp({
             apiKey: "AIzaSyAncEZ0yFm9g47lwaXoAIn-XYmY0tQPHE",
             authDomain: "myanmar-b0fce.firebaseapp.com",
             projectId: "myanmar-b0fce",
             storageBucket: "myanmar-b0fce.appspot.com",
             messagingSenderId: "770654697940",
             appId: "1:770654697940:web:fccfb24d410868c4fc7c41"
-        };
+        });
 
-        const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // Email Login
-        window.loginUser = () => {
+        
+        window.login = () => {
             const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => alert("Login အောင်မြင်သည်!"))
-                .catch((e) => alert("Error: " + e.message));
+            const pass = document.getElementById("password").value;
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => alert("အောင်မြင်သည်"))
+                .catch(e => alert("Error: " + e.message));
         };
 
-        // Google Login (Redirect mode - ဖုန်းအတွက် အကောင်းဆုံး)
-        window.loginGoogle = () => {
-            signInWithRedirect(auth, provider);
+        window.googleLogin = () => {
+            signInWithRedirect(auth, new GoogleAuthProvider());
         };
-
-        // Login ပြီးပြန်ရောက်လာတဲ့အခါ ရလဒ်စစ်ဆေးခြင်း
-        getRedirectResult(auth)
-            .then((result) => {
-                if (result) alert("Google Login အောင်မြင်သည်!");
-            })
-            .catch((e) => alert("Error: " + e.message));
     </script>
 </body>
 </html>
