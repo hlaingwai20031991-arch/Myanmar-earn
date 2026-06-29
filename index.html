@@ -1,32 +1,35 @@
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+  // Firebase SDK Version အသစ်ကို သုံးထားပါတယ်
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAmcEZOyFTm9g47lwaXoAln-XYmY0tQPHE",
-        authDomain: "myanmar-b0fce.firebaseapp.com",
-        projectId: "myanmar-b0fce",
-        storageBucket: "myanmar-b0fce.firebasestorage.app",
-        messagingSenderId: "770654697940",
-        appId: "1:770654697940:web:fecfb24d410868c4fc7e41"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyAncEZ0yFm9g47lwaXoAIn-XYmY0tQPHE",
+    authDomain: "myanmar-b0fce.firebaseapp.com",
+    projectId: "myanmar-b0fce",
+    storageBucket: "myanmar-b0fce.appspot.com",
+    messagingSenderId: "770654697940",
+    appId: "1:770654697940:web:fccfb24d410868c4fc7c41"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    window.loginUser = () => {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        signInWithEmailAndPassword(auth, email, password)
-            .then(() => alert("Login အောင်မြင်သည်"))
-            .catch((e) => alert("Error: " + e.message));
-    };
+  // Login ဝင်ရန်
+  window.loginUser = () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Login အောင်မြင်သည်"))
+      .catch((e) => alert("Error: " + e.message));
+  };
 
-    window.registerUser = () => {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(() => alert("Register အောင်မြင်သည်"))
-            .catch((e) => alert("Error: " + e.message));
-    };
+  // အကောင့်သစ်ဖွင့်ရန်
+  window.registerUser = () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Register အောင်မြင်သည်"))
+      .catch((e) => alert("Error: " + e.message));
+  };
 </script>
