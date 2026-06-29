@@ -1,6 +1,6 @@
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAmcEZOyFTm9g47lwaXoAln-XYmY0tQPHE",
@@ -14,21 +14,19 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Login function
     window.loginUser = () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         signInWithEmailAndPassword(auth, email, password)
             .then(() => alert("Login အောင်မြင်သည်"))
-            .catch((error) => alert("Error: " + error.message));
+            .catch((e) => alert("Error: " + e.message));
     };
 
-    // Register function
     window.registerUser = () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => alert("Register အောင်မြင်သည်"))
-            .catch((error) => alert("Error: " + error.message));
+            .catch((e) => alert("Error: " + e.message));
     };
 </script>
