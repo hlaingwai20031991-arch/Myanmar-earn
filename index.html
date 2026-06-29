@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="my">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -20,7 +20,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         const app = initializeApp({
             apiKey: "AIzaSyAncEZ0yFm9g47lwaXoAIn-XYmY0tQPHE",
@@ -37,13 +37,17 @@
             const email = document.getElementById("email").value;
             const pass = document.getElementById("password").value;
             signInWithEmailAndPassword(auth, email, pass)
-                .then(() => alert("အောင်မြင်သည်"))
+                .then(() => window.location.href = "ads.html")
                 .catch(e => alert("Error: " + e.message));
         };
 
         window.googleLogin = () => {
             signInWithRedirect(auth, new GoogleAuthProvider());
         };
+
+        getRedirectResult(auth).then((result) => {
+            if (result) window.location.href = "ads.html";
+        });
     </script>
 </body>
 </html>
