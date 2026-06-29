@@ -19,7 +19,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAncEZ0yFm9g47lwaXoAIn-XYmY0tQPHE",
@@ -34,7 +34,7 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Email/Password Login
+        // Email Login
         window.loginUser = () => {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
@@ -43,12 +43,17 @@
                 .catch((e) => alert("Error: " + e.message));
         };
 
-        // Google Login
+        // Google Login (Redirect mode - ဖုန်းအတွက် အကောင်းဆုံး)
         window.loginGoogle = () => {
-            signInWithPopup(auth, provider)
-                .then(() => alert("Google Login အောင်မြင်သည်!"))
-                .catch((e) => alert("Error: " + e.message));
+            signInWithRedirect(auth, provider);
         };
+
+        // Login ပြီးပြန်ရောက်လာတဲ့အခါ ရလဒ်စစ်ဆေးခြင်း
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result) alert("Google Login အောင်မြင်သည်!");
+            })
+            .catch((e) => alert("Error: " + e.message));
     </script>
 </body>
 </html>
