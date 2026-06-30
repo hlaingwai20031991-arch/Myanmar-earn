@@ -1,95 +1,12 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myanmar Earn</title>
-    <style>
-        body { background: #1a202c; color: white; text-align: center; font-family: sans-serif; padding: 20px; }
-        input { display: block; width: 90%; margin: 10px auto; padding: 12px; border-radius: 5px; border: none; }
-        button { width: 90%; padding: 12px; margin: 5px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; }
-        .green { background: #28a745; color: white; }
-        .red { background: #dd4b39; color: white; }
-        .ad-box { border: 2px dashed #ffffff; padding: 30px; margin: 20px 0; border-radius: 10px; }
-        
-        /* အစပိုင်းမှာ ကြော်ငြာစာမျက်နှာကို ဖျောက်ထားမည် */
-        #ads-screen { display: none; }
-    </style>
-</head>
-<body>
-
-    <!-- ၁။ Login စခရင် -->
-    <div id="login-screen">
-        <h1>Myanmar Earn</h1>
-        <input id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        
-        <button class="green" onclick="login()">Email ဖြင့် Login ဝင်ရန်</button>
-        <button class="red" onclick="googleLogin()">Google (Gmail) ဖြင့် Login ဝင်ရန်</button>
-    </div>
-
-    <!-- ၂။ ကြော်ငြာကြည့်မည့် စခရင် -->
-    <div id="ads-screen">
-        <h1>ကြော်ငြာကြည့်ရန် စာမျက်နှာ</h1>
-        <div class="ad-box">
-            <p>ဤနေရာတွင် ကြော်ငြာများ ပေါ်လာပါမည်</p>
-        </div>
-        <button onclick="logout()" style="padding: 10px; width: 100px; color: black;">Logout</button>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "သင့် Firebase Console ထဲက apiKey အမှန်ကို ဒီမှာထည့်ပါ", // <-- ဒီနေရာကို သေချာပြင်ပါ
-            authDomain: "myanmar-b0fce.firebaseapp.com",
-            projectId: "myanmar-b0fce",
-            storageBucket: "myanmar-b0fce.appspot.com",
-            messagingSenderId: "770654697940",
-            appId: "1:770654697940:web:fccfb24d410868c4fc7c41"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        
-        // စာမျက်နှာ အဖွင့်အပိတ် လုပ်ပေးမည့် Function များ
-        const showAds = () => {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('ads-screen').style.display = 'block';
-        };
-
-        const showLogin = () => {
-            document.getElementById('login-screen').style.display = 'block';
-            document.getElementById('ads-screen').style.display = 'none';
-        };
-
-        // Email ဖြင့် ဝင်ခြင်း
-        window.login = () => {
-            const email = document.getElementById("email").value;
-            const pass = document.getElementById("password").value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => showAds()) // အောင်မြင်ရင် Ads ပြမည်
-                .catch(e => alert("Error: " + e.message));
-        };
-
-        // Google ဖြင့် ဝင်ခြင်း
-        window.googleLogin = () => {
-            signInWithRedirect(auth, new GoogleAuthProvider());
-        };
-
-        // Google Login ဝင်ပြီး ပြန်ရောက်လာသည့်အခါ Ads ပြမည်
-        getRedirectResult(auth).then((result) => {
-            if (result) {
-                showAds();
-            }
+<script type="module">
+    // (အပေါ်ပိုင်း import တွေက အတူတူပဲထားပါ)
+    // ...
+    window.googleLogin = () => {
+        console.log("Google Login ခလုတ်ကို နှိပ်လိုက်ပါပြီ");
+        signInWithRedirect(auth, new GoogleAuthProvider())
+        .catch((error) => {
+            console.error("Error ဖြစ်နေပါတယ်:", error);
+            alert("Error: " + error.message);
         });
-
-        // အကောင့်ထွက်ခြင်း
-        window.logout = () => {
-            signOut(auth).then(() => {
-                showLogin(); // ထွက်ပြီးရင် Login ပြန်ပြမည်
-            });
-        };
-    </script>
-</body>
-</html>
+    };
+</script>
